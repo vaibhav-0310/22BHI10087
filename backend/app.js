@@ -22,7 +22,7 @@ db()
   .catch((e) => {
     console.log(e);
   });
-// inserting users
+
 app.get("/insert", async (req, res) => {
   try {
     let data = user;
@@ -43,11 +43,11 @@ app.get("/insertPosts/:id", async (req, res) => {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
 
-    console.log("Posts fetched successfully:", response.data);
+    console.log(response.data);
     await Posts.insertMany(response.data);
     res.json(response.data);
   } catch (error) {
-    console.error("Error fetching posts:", error.message);
+    console.error( error.message);
     res.status(500).json({ error: "Failed to fetch posts" });
   }
 });
@@ -87,7 +87,7 @@ app.get("/posts", async (req, res) => {
 
     res.status(400).json({ error: "Invalid query type" });
   } catch (error) {
-    console.error("Error fetching posts:", error);
+    console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
