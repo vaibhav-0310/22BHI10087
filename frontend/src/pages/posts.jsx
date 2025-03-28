@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
 
-function Top() {
-    const [user, setUser] = useState({
+function Posts() {
+    const [posts, setPosts] = useState({
         id: "",
-        name: "",
-        posts: "",
+        postid: "",
+        content: "",
     });
 
     useEffect(() => {
-        axios.get("http://localhost/users")
+        axios.get("http://localhost/posts/?type=latest")
             .then((response) => {
                 setUser(response.data);
             })
@@ -20,10 +20,11 @@ function Top() {
 
     return (
         <>
-            <p>{user.id}</p>
-            <p>{user.name}</p>
+            <p>{posts.id}</p>
+            <p>{posts.id}</p>
+            <p>{posts.content}</p>
         </>
     );
 }
 
-export default Top;
+export default Posts;
