@@ -34,21 +34,24 @@ app.get("/insert",async(req,res)=>{
     }
 })
 
+
 app.get("/insertPosts/:id", async (req, res) => {
     try {
         const { id } = req.params;
         const apiUrl = `http://20.244.56.144/test/users/${id}/posts`;
-        const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiZXhwIjoxNzQzMTQzODc5LCJpYXQiOjE3NDMxNDM1NzksImlzcyI6IkFmZm9yZG1lZCIsImp0aSI6IjhmNzUzZDIzLWQ4NTctNGZiOC1hZWM0LTI0MWE5OTUxMmI5ZiIsInN1YiI6InZhaWJoYXZiaGFyZ2F2MjAyMkB2aXRiaG9wYWwuYWMuaW4ifSwiY29tcGFueU5hbWUiOiJnb01hcnQiLCJjbGllbnRJRCI6IjhmNzUzZDIzLWQ4NTctNGZiOC1hZWM0LTI0MWE5OTUxMmI5ZiIsImNsaWVudFNlY3JldCI6ImpXRGxoZ1hFY0FrbkZWZm4iLCJvd25lck5hbWUiOiJWYWliaGF2IEJoYXJnYXYiLCJvd25lckVtYWlsIjoidmFpYmhhdmJoYXJnYXYyMDIyQHZpdGJob3BhbC5hYy5pbiIsInJvbGxObyI6IjIyQkhJMTAwODcifQ.tnziGSIrWfybRJ9VB8O9k91NImtFpc3Ua1DXtfVbuOks";
+        const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiZXhwIjoxNzQzMTQ2MTA2LCJpYXQiOjE3NDMxNDU4MDYsImlzcyI6IkFmZm9yZG1lZCIsImp0aSI6IjhmNzUzZDIzLWQ4NTctNGZiOC1hZWM0LTI0MWE5OTUxMmI5ZiIsInN1YiI6InZhaWJoYXZiaGFyZ2F2MjAyMkB2aXRiaG9wYWwuYWMuaW4ifSwiY29tcGFueU5hbWUiOiJnb01hcnQiLCJjbGllbnRJRCI6IjhmNzUzZDIzLWQ4NTctNGZiOC1hZWM0LTI0MWE5OTUxMmI5ZiIsImNsaWVudFNlY3JldCI6ImpXRGxoZ1hFY0FrbkZWZm4iLCJvd25lck5hbWUiOiJWYWliaGF2IEJoYXJnYXYiLCJvd25lckVtYWlsIjoidmFpYmhhdmJoYXJnYXYyMDIyQHZpdGJob3BhbC5hYy5pbiIsInJvbGxObyI6IjIyQkhJMTAwODcifQ.DJ03pRtJQSsStJHE6gGOgee-6SCYgKYtKfZwEq5wGxs";
 
         const response = await axios.get(apiUrl, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             },
         });
+        console.log("Posts fetched successfully:", response.data);
+        await Posts.insertMany(response.data);
         res.json(response.data);
-        console.log('Posts fetched successfully:', response.data);
     } catch (error) {
-        console.error("Error fetching posts:", error);
+        console.error("Error fetching posts:", error.message);
+        res.status(500).json({ error: "Failed to fetch posts" });
     }
 });
 
