@@ -17,7 +17,7 @@ const db = async () => {
 
 db()
   .then(() => {
-    console.log("connectd");
+    console.log("connected");
   })
   .catch((e) => {
     console.log(e);
